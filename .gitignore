@@ -1,0 +1,11 @@
+# local/private overrides
+.bashrc.local
+.zshrc.local
+.env
+.env.*
+**/*.pem
+**/*.key
+**/*.p12
+**/*.crt
+.DS_Store
+backup
