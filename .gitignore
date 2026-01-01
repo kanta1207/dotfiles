@@ -1,6 +1,7 @@
 # local/private overrides
 .bashrc.local
 .zshrc.local
+.config/git/config.local
 .env
 .env.*
 **/*.pem

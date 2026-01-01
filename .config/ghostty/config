@@ -1,0 +1,18 @@
+background-opacity = 0.75
+theme = "TokyoNight Storm"
+
+quick-terminal-position = "top"
+quick-terminal-screen = "mouse"
+quick-terminal-animation-duration = 0.3
+
+window-height = 40
+window-width = 180
+
+cursor-color = "#FF88FF"
+cursor-style-blink = true
+
+macos-icon = custom-style
+macos-icon-ghost-color = "010101"
+macos-icon-screen-color = "FF88FF"
+
+keybind = shift+enter=text:\n
