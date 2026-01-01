@@ -1,5 +1,20 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
+local function confirm_and_act(window, pane, opts)
+  -- Accept Enter (empty) or y/yes as affirmative
+  window:perform_action(
+    act.PromptInputLine({
+      description = opts.prompt or "(wezterm) Confirm?",
+      action = wezterm.action_callback(function(win, p, line)
+        local ans = (line or ""):gsub("%s+", ""):lower()
+        if ans == "" or ans == "y" or ans == "yes" then
+          win:perform_action(opts.action, p)
+        end
+      end),
+    }),
+    pane
+  )
+end
 
 -- Show which key table is active in the status area
 wezterm.on("update-right-status", function(window, pane)
@@ -57,8 +72,37 @@ return {
     { key = "{", mods = "LEADER", action = act({ MoveTabRelative = -1 }) },
     -- Tab新規作成
     { key = "t", mods = "SUPER", action = act({ SpawnTab = "CurrentPaneDomain" }) },
-    -- Tabを閉じる
-    { key = "w", mods = "SUPER", action = act({ CloseCurrentTab = { confirm = true } }) },
+    -- Pane/Tabs close: Cmd+W closes pane if multiple, otherwise closes tab
+    {
+      key = "w",
+      mods = "SUPER",
+      action = wezterm.action_callback(function(window, pane)
+        local tab = pane:tab()
+        local pane_count = tab and #tab:panes() or 1
+        if pane_count > 1 then
+          confirm_and_act(window, pane, {
+            prompt = "(wezterm) Close pane? [Enter/y=yes, other=no]:",
+            action = act.CloseCurrentPane({ confirm = false }),
+          })
+        else
+          confirm_and_act(window, pane, {
+            prompt = "(wezterm) Close tab? [Enter/y=yes, other=no]:",
+            action = act.CloseCurrentTab({ confirm = false }),
+          })
+        end
+      end),
+    },
+    -- Always close tab with Cmd+Shift+W
+    {
+      key = "w",
+      mods = "SUPER|SHIFT",
+      action = wezterm.action_callback(function(window, pane)
+        confirm_and_act(window, pane, {
+          prompt = "(wezterm) Close tab? [Enter/y=yes, other=no]:",
+          action = act.CloseCurrentTab({ confirm = false }),
+        })
+      end),
+    },
     -- アプリを終了 (Cmd+Q)
     { key = "q", mods = "SUPER", action = act.QuitApplication },
     { key = "}", mods = "LEADER", action = act({ MoveTabRelative = 1 }) },
@@ -79,6 +123,8 @@ return {
     -- Pane作成 leader + r or d
     { key = "d", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
     { key = "r", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+    -- Pane作成 Cmd + d (横分割)
+    { key = "d", mods = "SUPER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
     -- Paneを閉じる leader + x
     { key = "x", mods = "LEADER", action = act({ CloseCurrentPane = { confirm = true } }) },
     -- Pane移動 leader + hlkj
@@ -86,6 +132,11 @@ return {
     { key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
     { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
     { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+    -- Paneフォーカス移動 Option+Cmd+矢印
+    { key = "LeftArrow", mods = "ALT|SUPER", action = act.ActivatePaneDirection("Left") },
+    { key = "RightArrow", mods = "ALT|SUPER", action = act.ActivatePaneDirection("Right") },
+    { key = "UpArrow", mods = "ALT|SUPER", action = act.ActivatePaneDirection("Up") },
+    { key = "DownArrow", mods = "ALT|SUPER", action = act.ActivatePaneDirection("Down") },
     -- Pane選択
     { key = "[", mods = "CTRL|SHIFT", action = act.PaneSelect },
     -- 選択中のPaneのみ表示
