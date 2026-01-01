@@ -1,0 +1,10 @@
+[init]
+  defaultBranch = main
+
+[alias]
+  co = checkout
+  ci = commit
+  st = status
+  br = branch
+  pl = pull
+  ps = push
