@@ -59,6 +59,8 @@ return {
     { key = "t", mods = "SUPER", action = act({ SpawnTab = "CurrentPaneDomain" }) },
     -- Tabを閉じる
     { key = "w", mods = "SUPER", action = act({ CloseCurrentTab = { confirm = true } }) },
+    -- アプリを終了 (Cmd+Q)
+    { key = "q", mods = "SUPER", action = act.QuitApplication },
     { key = "}", mods = "LEADER", action = act({ MoveTabRelative = 1 }) },
 
     -- 画面フルスクリーン切り替え
@@ -69,6 +71,8 @@ return {
     { key = "[", mods = "LEADER", action = act.ActivateCopyMode },
     -- コピー
     { key = "c", mods = "SUPER", action = act.CopyTo("Clipboard") },
+    -- スクロールバックと画面をクリア (GhosttyのCmd+K相当)
+    { key = "k", mods = "SUPER", action = act.ClearScrollback("ScrollbackAndViewport") },
     -- 貼り付け
     { key = "v", mods = "SUPER", action = act.PasteFrom("Clipboard") },
 
