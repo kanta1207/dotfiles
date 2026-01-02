@@ -4,8 +4,13 @@
 [alias]
   c = checkout
   cb = checkout -b
-  cm = commit
-  st = status
-  br = branch
+  cm = commit -m
+  s = status
+  st = stash
+  b = branch
   pl = pull
   ps = push
+  psu = push --set-upstream origin
+
+[push]
+	autoSetupRemote = true
