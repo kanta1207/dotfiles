@@ -2,9 +2,15 @@
   defaultBranch = main
 
 [alias]
-  co = checkout
-  ci = commit
-  st = status
-  br = branch
+  c = checkout
+  cb = checkout -b
+  cm = commit -m
+  s = status
+  st = stash
+  b = branch
   pl = pull
   ps = push
+  psu = push --set-upstream origin
+
+[push]
+	autoSetupRemote = true
