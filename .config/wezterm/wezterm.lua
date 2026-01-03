@@ -7,6 +7,12 @@ config.use_ime = true
 config.window_background_opacity = 0.65
 config.macos_window_background_blur = 20
 
+-- Maximize window on launch
+wezterm.on("gui-startup", function(cmd)
+  local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
+  window:gui_window():maximize()
+end)
+
 ----------------------------------------------------
 -- Tab
 ----------------------------------------------------
