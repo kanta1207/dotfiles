@@ -8,7 +8,7 @@
   s = status
   st = stash
   b = branch
-  pl = pull
+  p = pull
   ps = push
   psu = push --set-upstream origin
 
