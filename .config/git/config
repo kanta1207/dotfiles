@@ -4,6 +4,7 @@
 [alias]
   c = checkout
   cb = checkout -b
+  main = checkout main
   cm = commit -m
   s = status
   st = stash
