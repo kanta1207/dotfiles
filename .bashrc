@@ -6,6 +6,11 @@ export PATH="$HOME/.local/bin:$PATH"
 # Local overrides (not tracked)
 [ -f "$HOME/.bashrc.local" ] && source "$HOME/.bashrc.local"
 
+# Cursor CLI alias (cursor-agent -> cursorcli)
+if command -v cursor-agent >/dev/null 2>&1; then
+  alias cursorcli='cursor-agent'
+fi
+
 # Rust
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 

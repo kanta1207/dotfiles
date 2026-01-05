@@ -63,6 +63,11 @@ if [ -d "/Applications/Cursor.app" ]; then
   }
 fi
 
+# Cursor CLI alias (cursor-agent -> cursorcli)
+if command -v cursor-agent >/dev/null 2>&1; then
+  alias cursorcli='cursor-agent'
+fi
+
 # ------------------------------------------------------------
 # Antigravity (only if present)
 # ------------------------------------------------------------
