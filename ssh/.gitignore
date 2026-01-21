@@ -1,0 +1,10 @@
+# Only allow safe SSH config files to be tracked
+# NEVER commit keys, known_hosts, or any secrets
+
+# Block everything by default
+*
+
+# Allow only these safe files
+!.gitignore
+!config
+!README.md

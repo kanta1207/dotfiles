@@ -1,0 +1,24 @@
+# GitHub SSH configuration
+# Supports multiple GitHub accounts via SSH host aliases
+
+# Personal GitHub - kanta1207 account (existing)
+Host github.com-kanta1207
+    HostName github.com
+    User git
+    IdentitiesOnly yes
+
+# Personal GitHub (default)
+# Use: git@github.com:username/repo.git
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+
+# Work GitHub
+# Use: git@github-work:org/repo.git
+Host github-work
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_work
+    IdentitiesOnly yes
