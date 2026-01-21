@@ -92,16 +92,19 @@ fi
 #   - ~/Dev/company/plus/*  => work account
 #   - otherwise             => personal account
 # ------------------------------------------------------------
+GH_WORK_USER="kantasakai1207_plus"
+GH_PERSONAL_USER="kanta1207"
+
 function gh_auto_switch() {
   # skip if gh is not installed
   command -v gh >/dev/null 2>&1 || return 0
 
   case "$PWD" in
-    /Users/kanta/Dev/company/plus/*)
-      gh auth switch --hostname github.com --user kantasakai1207_plus >/dev/null 2>&1
+    $HOME/Dev/company/plus/*)
+      gh auth switch --hostname github.com --user "$GH_WORK_USER" >/dev/null 2>&1
       ;;
     *)
-      gh auth switch --hostname github.com --user kanta1207 >/dev/null 2>&1
+      gh auth switch --hostname github.com --user "$GH_PERSONAL_USER" >/dev/null 2>&1
       ;;
   esac
 }
