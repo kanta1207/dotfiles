@@ -100,7 +100,7 @@ function gh_auto_switch() {
   command -v gh >/dev/null 2>&1 || return 0
 
   case "$PWD" in
-    $HOME/Dev/company/plus/*)
+    $HOME/Dev/company/plus|$HOME/Dev/company/plus/*)
       gh auth switch --hostname github.com --user "$GH_WORK_USER" >/dev/null 2>&1
       ;;
     *)
