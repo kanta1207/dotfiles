@@ -88,6 +88,37 @@ fi
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # ------------------------------------------------------------
+# gh (GitHub CLI) account auto-switch by directory
+#   - ~/Dev/company/plus/*  => work account
+#   - otherwise             => personal account
+# ------------------------------------------------------------
+GH_WORK_USER="kantasakai1207_plus"
+GH_PERSONAL_USER="kanta1207"
+
+function gh_auto_switch() {
+  # skip if gh is not installed
+  command -v gh >/dev/null 2>&1 || return 0
+
+  case "$PWD" in
+    $HOME/Dev/company/plus/*)
+      gh auth switch --hostname github.com --user "$GH_WORK_USER" >/dev/null 2>&1
+      ;;
+    *)
+      gh auth switch --hostname github.com --user "$GH_PERSONAL_USER" >/dev/null 2>&1
+      ;;
+  esac
+}
+
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd gh_auto_switch
+
+# also run once on shell startup (so it applies without cd)
+gh_auto_switch
+
+
+
+
+# ------------------------------------------------------------
 # Prompt (Starship) (only if installed)
 # ------------------------------------------------------------
 command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
