@@ -3,3 +3,6 @@
 
 [include]
   path = /Users/kanta/.config/git/config.local
+
+[includeIf "gitdir:/Users/kanta/dev/company/plus/"]
+  path = /Users/kanta/.config/git/config.work

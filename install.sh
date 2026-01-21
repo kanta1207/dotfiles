@@ -55,4 +55,17 @@ else
   echo "→ Skipping starship.toml (not found)"
 fi
 
+# ------------------------------------------------------------
+# SSH Configuration
+# ------------------------------------------------------------
+if [ -e "$DOTFILES/ssh/config" ]; then
+  echo "→ Setting up SSH configuration"
+  mkdir -p "$HOME/.ssh"
+  chmod 700 "$HOME/.ssh"
+  link_item "$DOTFILES/ssh/config" "$HOME/.ssh/config" "SSH config"
+  chmod 600 "$HOME/.ssh/config"
+else
+  echo "→ Skipping SSH config (not found)"
+fi
+
 echo "Dotfiles setup complete."
