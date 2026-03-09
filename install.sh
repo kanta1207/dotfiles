@@ -49,8 +49,6 @@ link_item "$DOTFILES/.config/ghostty" "$HOME/.config/ghostty" ".config/ghostty"
 # ------------------------------------------------------------
 if [ -e "$DOTFILES/.config/starship.toml" ] || [ -L "$DOTFILES/.config/starship.toml" ]; then
   link_item "$DOTFILES/.config/starship.toml" "$HOME/.config/starship.toml" ".config/starship.toml"
-elif [ -e "$DOTFILES/starship.toml" ] || [ -L "$DOTFILES/starship.toml" ]; then
-  link_item "$DOTFILES/starship.toml" "$HOME/.config/starship.toml" ".config/starship.toml (repo root)"
 else
   echo "→ Skipping starship.toml (not found)"
 fi
