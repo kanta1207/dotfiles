@@ -16,6 +16,22 @@ echo "Setting up dotfiles from $DOTFILES"
 mkdir -p "$HOME/.config"
 mkdir -p "$HOME/.local/bin"
 
+# Install Homebrew packages declared in Brewfile when available.
+if [ "$(uname -s)" = "Darwin" ]; then
+  if command -v brew >/dev/null 2>&1; then
+    if [ -f "$DOTFILES/Brewfile" ]; then
+      echo "→ Installing Homebrew packages from Brewfile"
+      brew bundle --file="$DOTFILES/Brewfile"
+    else
+      echo "→ Skipping Homebrew bundle (Brewfile not found)"
+    fi
+  else
+    echo "→ Skipping Homebrew bundle (Homebrew not installed). Install Homebrew and run 'brew bundle --file \"$DOTFILES/Brewfile\"' to install Brewfile packages."
+  fi
+else
+  echo "→ Skipping Homebrew bundle (macOS only)"
+fi
+
 # Symlink helper that only links when the source exists.
 link_item() {
   local src="$1"
