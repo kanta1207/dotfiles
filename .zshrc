@@ -76,6 +76,11 @@ if [ -d "$HOME/.antigravity/antigravity/bin" ]; then
 fi
 
 # ------------------------------------------------------------
+# zoxide (only if installed)
+# ------------------------------------------------------------
+[ -f "$HOME/dotfiles/zsh/zoxide.zsh" ] && source "$HOME/dotfiles/zsh/zoxide.zsh"
+
+# ------------------------------------------------------------
 # Local overrides (NOT tracked)
 #   - secrets (tokens)
 #   - machine-specific env vars

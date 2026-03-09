@@ -1,0 +1,2 @@
+brew "zoxide"
+brew "lazygit"
