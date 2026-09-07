@@ -19,9 +19,17 @@ mkdir -p "$HOME/.local/bin"
 # Install Homebrew packages declared in Brewfile when available.
 if [ "$(uname -s)" = "Darwin" ]; then
   if command -v brew >/dev/null 2>&1; then
+    BREW="$(command -v brew)"
+  elif [ -x /opt/homebrew/bin/brew ]; then
+    BREW=/opt/homebrew/bin/brew
+  else
+    BREW=""
+  fi
+
+  if [ -n "$BREW" ]; then
     if [ -f "$DOTFILES/Brewfile" ]; then
       echo "→ Installing Homebrew packages from Brewfile"
-      brew bundle --file="$DOTFILES/Brewfile"
+      "$BREW" bundle --file="$DOTFILES/Brewfile"
     else
       echo "→ Skipping Homebrew bundle (Brewfile not found)"
     fi
@@ -32,18 +40,29 @@ else
   echo "→ Skipping Homebrew bundle (macOS only)"
 fi
 
-# Symlink helper that only links when the source exists.
+# Symlink helper that never replaces an existing destination.
 link_item() {
   local src="$1"
   local dest="$2"
   local label="$3"
 
-  if [ -e "$src" ] || [ -L "$src" ]; then
-    echo "→ Linking $label"
-    ln -sfn "$src" "$dest"
-  else
+  if [ ! -e "$src" ] && [ ! -L "$src" ]; then
     echo "→ Skipping $label (not found)"
+    return 0
   fi
+
+  if [ -L "$dest" ] && [ "$(readlink "$dest")" = "$src" ]; then
+    echo "→ Already linked $label"
+    return 0
+  fi
+
+  if [ -e "$dest" ] || [ -L "$dest" ]; then
+    echo "Error: refusing to replace existing $dest" >&2
+    return 1
+  fi
+
+  echo "→ Linking $label"
+  ln -s "$src" "$dest"
 }
 
 # ------------------------------------------------------------
@@ -52,6 +71,7 @@ link_item() {
 link_item "$DOTFILES/.zshrc"     "$HOME/.zshrc"     ".zshrc"
 link_item "$DOTFILES/.bashrc"    "$HOME/.bashrc"    ".bashrc"
 link_item "$DOTFILES/.gitconfig" "$HOME/.gitconfig" ".gitconfig"
+link_item "$DOTFILES/.zprofile"  "$HOME/.zprofile"  ".zprofile"
 
 # ------------------------------------------------------------
 # Config directories

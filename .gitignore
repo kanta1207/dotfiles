@@ -2,6 +2,7 @@
 .bashrc.local
 .zshrc.local
 .config/git/config.local
+.config/git/config.work.local
 .env
 .env.*
 **/*.pem

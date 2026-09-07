@@ -1,8 +1,8 @@
 [include]
-  path = /Users/kanta/.config/git/config
+  path = ~/.config/git/config
 
 [include]
-  path = /Users/kanta/.config/git/config.local
+  path = ~/.config/git/config.local
 
-[includeIf "gitdir:/Users/kanta/dev/company/plus/"]
-  path = /Users/kanta/.config/git/config.work
+[includeIf "gitdir:~/dev/company/plus/"]
+  path = ~/.config/git/config.work

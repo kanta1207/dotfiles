@@ -1,2 +1,6 @@
+brew "git"
+brew "gh"
+brew "starship"
 brew "zoxide"
 brew "lazygit"
+cask "wezterm"
