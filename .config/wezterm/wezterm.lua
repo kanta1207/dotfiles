@@ -3,6 +3,10 @@ local config = wezterm.config_builder()
 
 config.automatically_reload_config = true
 config.font_size = 14.0
+config.font = wezterm.font_with_fallback({
+  "JetBrains Mono",
+  "Hiragino Kaku Gothic ProN",
+})
 config.use_ime = true
 config.window_background_opacity = 0.65
 config.macos_window_background_blur = 20
